@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -e
+
+version=0.1
+
+usage() {
+	echo "Simple AWS, version $version"
+	echo "usage: saws [--help] [--version] <command> [<arguments>]"
+	echo
+	echo "Supported commands are:"
+	echo "install     Installs saws to /usr/local/bin"
+	echo "uninstall   Uninstalls saws from /usr/local/bin"
+	echo
+}
+
+if [ $# -lt 1 ]; then
+	usage >&2
+	exit 1
+fi
+
+command=$1
+cd $(dirname $(readlink -f $0))
+
+case $command in
+	install)
+		./saws-install "${@:2}"
+		;;
+
+	uninstall)
+		./saws-uninstall "${@:2}"
+		;;
+
+	--help)
+		usage
+		;;
+
+	--version)
+		echo "saws $version"
+		;;
+
+	*)
+		./error "saws: '$command' command unrecognized. Run 'saws --help' for usage."
+		;;
+esac
