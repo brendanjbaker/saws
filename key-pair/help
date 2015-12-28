@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+create    Create a new key pair
+destroy   Destroy a key pair
+exists    Check whether a key pair exists
+EOF

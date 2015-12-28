@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+attach        Attach Internet gateway to virtual private cloud
+create        Create Internet gateway
+destroy       Destroy Internet gateway
+detach        Detach Internet gateway from virtual private cloud
+list-by-tag   List Internet gateways by tag
+EOF

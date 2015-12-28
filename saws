@@ -8,9 +8,24 @@ usage() {
 	echo "Simple AWS, version $version"
 	echo "usage: saws [--help] [--version] <command> [<arguments>]"
 	echo
-	echo "Supported commands are:"
-	echo "install     Installs saws to /usr/local/bin"
-	echo "uninstall   Uninstalls saws from /usr/local/bin"
+	echo "Supported resource commands are:"
+	echo "elastic-ip            Manage IP addresses"
+	echo "hosted-zone           Manage DNS zones"
+	echo "instance              Manage server instances"
+	echo "internet-gateway      Manage Internet gateways"
+	echo "key-pair              Manage access key pairs"
+	echo "record-set            Manage DNS zone records"
+	echo "route-table           Manage route tables"
+	echo "route-table-route     Manage route table routes"
+	echo "security-group        Manage security groups"
+	echo "security-group-rule   Manage security group rules"
+	echo "subnet                Manage subnets"
+	echo "tag                   Manage tags"
+	echo "vpc                   Manage virtual private clouds"
+	echo
+	echo "Supported administrative commands are:"
+	echo "install               Installs saws to /usr/local/bin"
+	echo "uninstall             Uninstalls saws from /usr/local/bin"
 	echo
 }
 
@@ -19,10 +34,39 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
-command=$1
+export command=$1
+export subcommand=$2
+
 cd $(dirname $(readlink -f $0))
 
 case $command in
+	elastic-ip|\
+	hosted-zone|\
+	instance|\
+	internet-gateway|\
+	key-pair|\
+	record-set|\
+	route-table|\
+	route-table-route|\
+	security-group|\
+	security-group-rule|\
+	subnet|\
+	tag|\
+	vpc)
+		if [ $# -lt 2 ]; then
+			./usage 2 "$(./$command/help)" "$@"
+		elif [ "$subcommand" == "--help" ]; then
+			./$command/help
+			echo
+		else
+			if [ -f ./$command/$subcommand ]; then
+				./$command/$subcommand "${@:3}"
+			else
+				./error "saws: '$command $subcommand' is not a valid command. Try 'saws $command --help'."
+			fi
+		fi
+		;;
+
 	install)
 		./saws-install "${@:2}"
 		;;
@@ -40,6 +84,6 @@ case $command in
 		;;
 
 	*)
-		./error "saws: '$command' command unrecognized. Run 'saws --help' for usage."
+		./error "saws: '$command' is not a valid command. Try 'saws --help'."
 		;;
 esac

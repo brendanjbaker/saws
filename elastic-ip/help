@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+attach            Attach an elastic IP to an instance
+create            Create a new key elastic IP
+destroy           Destroy an elastic IP
+get-address       Gets an elastic IP's address
+list-unattached   List unattached elastic IP addresses
+EOF

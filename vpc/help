@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+create        Create a virtual private cloud
+destroy       Destroy a virtual private cloud
+list-by-tag   List virtual private clouds by tag
+EOF

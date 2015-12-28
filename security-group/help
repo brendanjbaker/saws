@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+create           Create a security group
+destroy          Destroy security group
+list-by-tag      List security groups by tag
+EOF
