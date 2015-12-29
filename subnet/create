@@ -15,6 +15,6 @@ subnet=$(
 
 subnet_id=$(echo $subnet | jq -e -r ".Subnet.SubnetId")
 
-./saw tag create $subnet_id Name $name
+./saws tag create $subnet_id Name $name
 
 echo $subnet_id
