@@ -12,6 +12,7 @@ instance_type=$5
 
 instance=$(
 	aws ec2 run-instances \
+		--associate-public-ip-address \
 		--image-id ami-116d857a \
 		--instance-type $instance_type \
 		--key-name $key_pair_id \
