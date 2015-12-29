@@ -13,7 +13,7 @@ vpc=$(
 
 vpc_id=$(echo $vpc | jq -e -r ".Vpc.VpcId")
 
-./saw tag create $vpc_id Name $name
+./saws tag create $vpc_id Name $name
 
 aws ec2 modify-vpc-attribute \
 	--vpc-id $vpc_id \
