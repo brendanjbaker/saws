@@ -34,6 +34,10 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
+if [ ! -f ~/.aws/credentials ]; then
+	aws configure || exit 1
+fi
+
 export command=$1
 export subcommand=$2
 
