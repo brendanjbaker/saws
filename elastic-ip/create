@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws elastic-ip create <domain>" "$@"
+
+domain=$1
+
+elastic_ip=$(
+	aws ec2 allocate-address \
+		--domain $domain)
+
+elastic_ip_id=$(echo $elastic_ip | jq -e -r ".AllocationId")
+
+echo $elastic_ip_id

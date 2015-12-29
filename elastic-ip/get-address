@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws elastic-ip get-address <elastic-ip-id>" "$@"
+
+elastic_ip_id=$1
+
+aws ec2 describe-addresses \
+	--allocation-ids $elastic_ip_id \
+	--output text \
+	--query "Addresses[0].PublicIp"
+

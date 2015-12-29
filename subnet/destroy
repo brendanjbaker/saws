@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./usage 1 "saws subnet destroy <subnet-id>" "$@"
+
+subnet_id=$1
+
+aws ec2 delete-subnet \
+	--subnet-id $subnet_id
+

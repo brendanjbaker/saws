@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws instance destroy <instance-id>" "$@"
+
+instance_id=$1
+
+aws ec2 terminate-instances \
+	--instance-ids $instance_id > /dev/null
+

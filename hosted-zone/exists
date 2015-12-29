@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./usage 1 "saws hosted-zone exists <hosted-zone-id>" "$@"
+
+hosted_zone_id=$1
+
+aws route53 get-hosted-zone \
+	--id $hosted_zone_id &> /dev/null
+

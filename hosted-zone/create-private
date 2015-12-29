@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws hosted-zone create-private <name> <vpc-id>" "$@"
+
+name=$1
+vpc_id=$2
+
+caller_reference=$(uuid -v 4)
+
+aws route53 create-hosted-zone \
+	--caller-reference $caller_reference \
+	--name $name \
+	--vpc VPCRegion=us-east-1,VPCId=$vpc_id \
+	\
+	--output text \
+	--query "HostedZone.Id" | xargs basename
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws internet-gateway attach <internet-gateway-id> <vpc-id>" "$@"
+
+internet_gateway_id=$1
+vpc_id=$2
+
+aws ec2 attach-internet-gateway \
+	--internet-gateway-id $internet_gateway_id \
+	--vpc-id $vpc_id

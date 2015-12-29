@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./usage 1 "saws internet-gateway destroy <internet-gateway-id>" "$@"
+
+internet_gateway_id=$1
+
+aws ec2 delete-internet-gateway \
+	--internet-gateway-id $internet_gateway_id
+

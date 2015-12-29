@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+./usage 5 "saws instance create <name> <key-pair-id> <subnet-id> <security-group-id> <instance-type>" "$@"
+
+name=$1
+key_pair_id=$2
+subnet_id=$3
+security_group_id=$4
+instance_type=$5
+
+instance=$(
+	aws ec2 run-instances \
+		--image-id ami-116d857a \
+		--instance-type $instance_type \
+		--key-name $key_pair_id \
+		--subnet-id $subnet_id)
+
+instance_id=$(echo $instance | jq -e -r ".Instances[0].InstanceId")
+
+aws ec2 modify-instance-attribute \
+	--groups $security_group_id \
+	--instance-id $instance_id
+
+./saws tag create $instance_id Name $name
+
+echo $instance_id

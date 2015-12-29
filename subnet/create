@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+./usage 3 "saws subnet create <name> <vpc-id> <cidr-block>" "$@"
+
+name=$1
+vpc_id=$2
+cidr_block=$3
+
+subnet=$(
+	aws ec2 create-subnet \
+		--cidr-block $cidr_block \
+		--vpc-id $vpc_id)
+
+subnet_id=$(echo $subnet | jq -e -r ".Subnet.SubnetId")
+
+./saw tag create $subnet_id Name $name
+
+echo $subnet_id

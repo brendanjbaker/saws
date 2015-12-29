@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws internet-gateway create <name>" "$@"
+
+name=$1
+
+internet_gateway=$(aws ec2 create-internet-gateway)
+internet_gateway_id=$(echo $internet_gateway | jq -e -r ".InternetGateway.InternetGatewayId")
+
+./saw tag create $internet_gateway_id Name $name
+
+echo $internet_gateway_id

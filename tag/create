@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+./usage 3 "saws tag create <resource-id> <name> <value>" "$@"
+
+resource_id=$1
+name=$2
+value=$3
+
+aws ec2 create-tags \
+	--resources $resource_id \
+	--tags \
+		"Key=$name,Value=$value"

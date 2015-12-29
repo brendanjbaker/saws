@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws hosted-zone get-private <vpc-id>" "$@"
+
+vpc_id=$1
+
+aws ec2 describe-vpcs \
+	--vpc-ids $vpc_id \
+	--output text \
+	--query "Vpcs[0].Tags[?Key=='hosted_zone_id'].Value"
+

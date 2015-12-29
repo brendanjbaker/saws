@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws elastic-ip attach <elastic-ip-id> <instance-id>" "$@"
+
+elastic_ip_id=$1
+instance_id=$2
+
+association=$(
+	aws ec2 associate-address \
+		--allocation-id $elastic_ip_id \
+		--instance-id $instance_id)
+
+association_id=$(echo $association | jq -e -r ".AssociationId")
+
+echo $association_id

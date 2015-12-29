@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws security-group list-by-tag <tag-name> <tag-value>" "$@"
+
+tag_name=$1
+tag_value=$2
+
+aws ec2 describe-security-groups \
+	--filters \
+		"Name=tag:$tag_name,Values=$tag_value" \
+	--output text \
+	--query "SecurityGroups[].GroupId" | tr '\t' '\n'

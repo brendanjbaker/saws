@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./usage 0 "saws elastic-ip list-unattached" "$@"
+
+aws ec2 describe-addresses \
+	--output text \
+	--query "Addresses[?AssociationId==null].AllocationId" | tr '\t' '\n'
+
