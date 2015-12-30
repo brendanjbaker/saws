@@ -9,6 +9,7 @@ usage() {
 	echo "usage: saws [--help] [--version] <command> [<arguments>]"
 	echo
 	echo "Supported resource commands are:"
+	echo "dhcp-options          Manage DHCP options"
 	echo "elastic-ip            Manage IP addresses"
 	echo "hosted-zone           Manage DNS zones"
 	echo "instance              Manage server instances"
@@ -44,6 +45,7 @@ export subcommand=$2
 cd $(dirname $(readlink -f $0))
 
 case $command in
+	dhcp-options|\
 	elastic-ip|\
 	hosted-zone|\
 	instance|\
