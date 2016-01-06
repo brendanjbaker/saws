@@ -14,7 +14,7 @@ dhcp_options_id=$(
 		--output text \
 		--query "DhcpOptions.DhcpOptionsId")
 
-./saws tag create $dhcp_options_id $private_domain
+./saws tag create $dhcp_options_id Name $private_domain
 
 echo $dhcp_options_id
 
