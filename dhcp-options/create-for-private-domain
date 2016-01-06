@@ -9,6 +9,6 @@ private_domain=$1
 aws ec2 create-dhcp-options \
 	--dhcp-configurations \
 		"Key=domain-name-servers,Values=AmazonProvidedDNS" \
-		"Key=domain-name,Values=$private_domain" \
+		"Key=domain-name,Values=ec2.internal,$private_domain" \
 	--output text \
 	--query "DhcpOptions.DhcpOptionsId"
