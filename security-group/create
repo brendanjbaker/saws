@@ -16,4 +16,6 @@ security_group=$(
 
 security_group_id=$(echo $security_group | jq -e -r ".GroupId")
 
+./saws tag create $security_group_id Name $description
+
 echo $security_group_id
