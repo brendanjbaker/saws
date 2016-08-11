@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+create        Create a subnet
+destroy       Destroy a subnet
+list-by-tag   List subnets by tag
+EOF

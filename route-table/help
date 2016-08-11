@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+get-main   Get the main route table
+EOF

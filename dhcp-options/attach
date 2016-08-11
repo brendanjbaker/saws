@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws dhcp-options attach <dhcp-options-id> <vpc-id>" "$@"
+
+dhcp_options_id=$1
+vpc_id=$2
+
+aws ec2 associate-dhcp-options \
+	--dhcp-options-id $dhcp_options_id \
+	--vpc-id $vpc_id

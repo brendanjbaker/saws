@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+create           Create an instance
+destroy          Destroy an instance
+get-ip-address   Get an instance's private IP address
+list-by-tag      List instances by tag
+wait             Wait for an instance to reach a state
+EOF

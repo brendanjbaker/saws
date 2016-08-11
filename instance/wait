@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws instance wait <status> <instance-id>" "$@"
+
+status=$1
+instance_id=$2
+
+aws ec2 wait $status \
+	--instance-ids $instance_id
+

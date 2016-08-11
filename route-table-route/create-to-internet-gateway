@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws route-table-route create-to-internet-gateway <route-table-id> <internet-gateway-id>" "$@"
+
+route_table_id=$1
+internet_gateway_id=$2
+
+aws ec2 create-route \
+	--destination-cidr-block 0.0.0.0/0 \
+	--gateway-id $internet_gateway_id \
+	--route-table-id $route_table_id > /dev/null

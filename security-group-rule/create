@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+./usage 4 "saws security-group-rule create <security-group-id> <protocol> <port> <cidr-block>" "$@"
+
+security_group_id=$1
+protocol=$2
+port=$3
+cidr_block=$4
+
+aws ec2 authorize-security-group-ingress \
+	--cidr $cidr_block \
+	--group-id $security_group_id \
+	--port $port \
+	--protocol $protocol

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws key-pair create <name> <output-pem-file-path>" "$@"
+
+name=$1
+pem_file=$2
+
+aws ec2 create-key-pair \
+	--key-name $name \
+	--query "KeyMaterial" \
+	--output text > $pem_file
+
+chmod 600 $pem_file
+
+echo $name

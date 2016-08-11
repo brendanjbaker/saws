@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+./usage 3 "saws security-group create <vpc-id> <name> <description>" "$@"
+
+vpc_id=$1
+name=$2
+description=$3
+
+security_group=$(
+	aws ec2 create-security-group \
+		--description $description \
+		--group-name $name \
+		--vpc-id $vpc_id)
+
+security_group_id=$(echo $security_group | jq -e -r ".GroupId")
+
+./saws tag create $security_group_id Name $description
+
+echo $security_group_id

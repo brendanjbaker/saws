@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws key-pair exists <name>" "$@"
+
+name=$1
+
+aws ec2 describe-key-pairs \
+	--key-names $name &> /dev/null

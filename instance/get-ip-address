@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws instance get-ip-address <instance-id>" "$@"
+
+instance_id=$1
+
+aws ec2 describe-instances \
+	--instance-ids $instance_id \
+	--output text \
+	--query "Reservations[0].Instances[0].PrivateIpAddress"
+

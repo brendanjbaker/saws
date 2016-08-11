@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Unfortunately, the AWS CLI requires a specially-formed JSON or XML
+# document to create, update, or delete DNS records. Below, we'll have to
+# construct a JSON document accordingly. I'm guessing that in the future, this
+# will no longer be necessary (either the AWS CLI will implement a wrapper, or
+# their API will be changed).
+#
+
+set -e
+
+./usage 5 "saws record-set create <hosted-zone-id> <type> <time-to-live> <hostname> <ip-address>" "$@"
+
+hosted_zone_id=$1
+type=$2
+time_to_live=$3
+hostname=$4
+ip_address=$5
+
+change_batch_file_path=$(tempfile)
+
+tee $change_batch_file_path > /dev/null <<EOF
+{
+	"Changes": [{
+		"Action": "CREATE",
+		"ResourceRecordSet": {
+			"Name": "$hostname",
+			"ResourceRecords": [{
+				"Value": "$ip_address"
+			}],
+			"TTL": $time_to_live,
+			"Type": "$type"
+		}
+	}]
+}
+EOF
+
+aws route53 change-resource-record-sets \
+	--change-batch file://$change_batch_file_path \
+	--hosted-zone-id $hosted_zone_id > /dev/null

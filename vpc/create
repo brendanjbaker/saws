@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws vpc create <name> <cidr-block>" "$@"
+
+name=$1
+cidr_block=$2
+
+vpc=$(
+	aws ec2 create-vpc \
+		--cidr-block $cidr_block)
+
+vpc_id=$(echo $vpc | jq -e -r ".Vpc.VpcId")
+
+./saws tag create $vpc_id Name $name
+
+aws ec2 modify-vpc-attribute \
+	--vpc-id $vpc_id \
+	--enable-dns-hostnames
+
+aws ec2 wait vpc-available \
+	--vpc-ids $vpc_id
+
+echo $vpc_id

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+cat <<EOF
+usage: saws $command [--help] <command> [<arguments>]
+
+Supported commands are:
+create-private   Create a private hosted zone
+destroy          Destroy a hosted zone
+exists           Check whether a hosted zone exists
+get-private      Get a private hosted zone
+EOF

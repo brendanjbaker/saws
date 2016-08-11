@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws dhcp-options create-for-private-domain <private-domain>" "$@"
+
+private_domain=$1
+
+dhcp_options_id=$(
+	aws ec2 create-dhcp-options \
+		--dhcp-configurations \
+			"Key=domain-name-servers,Values=AmazonProvidedDNS" \
+			"Key=domain-name,Values=ec2.internal $private_domain" \
+		--output text \
+		--query "DhcpOptions.DhcpOptionsId")
+
+./saws tag create $dhcp_options_id Name $private_domain
+
+echo $dhcp_options_id
+

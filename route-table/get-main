@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+./usage 1 "saws route-table/get-main <vpc-id>" "$@"
+
+vpc_id=$1
+
+route_tables=$(
+	aws ec2 describe-route-tables \
+		--filters \
+			"Name=association.main,Values=true" \
+			"Name=vpc-id,Values=$vpc_id")
+
+route_table_id=$(echo $route_tables | jq -e -r ".RouteTables[0].RouteTableId")
+
+echo $route_table_id;

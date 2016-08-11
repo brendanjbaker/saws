@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+script_path=$(readlink -f ./saws)
+bin_path=/usr/local/bin/saws
+
+if [ -h $bin_path ]; then
+	./warn "saws: Already installed"
+else
+	sudo ln -s $script_path $bin_path
+fi

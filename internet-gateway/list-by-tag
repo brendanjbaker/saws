@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+./usage 2 "saws internet-gateway list-by-tag <tag-name> <tag-value>" "$@"
+
+tag_name=$1
+tag_value=$2
+
+aws ec2 describe-internet-gateways \
+	--filters \
+		"Name=tag:$tag_name,Values=$tag_value" \
+	--output text \
+	--query "InternetGateways[].InternetGatewayId" | tr '\t' '\n'
+
